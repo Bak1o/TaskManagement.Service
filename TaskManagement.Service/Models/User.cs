@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using TaskManagement.Service.Exceptions;
 
 namespace TaskManagement.Service.Models
 {
@@ -17,5 +18,7 @@ namespace TaskManagement.Service.Models
         public Role Role { get; set; }
 
         
+
+
     }
 }

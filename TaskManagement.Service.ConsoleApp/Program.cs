@@ -56,7 +56,7 @@ internal class Program
             UserName = "Natia"
 
         };
-        var updateUser4 = new User
+        var updateUser4 = new UpdateUser
         {
             Id = 4,
             Email = "dsssgF4@gmail.com",
