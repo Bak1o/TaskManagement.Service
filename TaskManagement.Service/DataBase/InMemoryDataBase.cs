@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManagement.Service.Models;
 
-namespace TaskManagement.Service.Services.Implementations
+namespace TaskManagement.Service.DataBase
 {
-    public class Base
+    public class InMemoryDataBase
     {
         public List<User> Users = new();
 

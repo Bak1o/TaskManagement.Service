@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using TaskManagement.Service.DataBase;
 using TaskManagement.Service.Exceptions;
 using TaskManagement.Service.Models;
 using TaskManagement.Service.Services.Abstractions;
@@ -7,16 +8,12 @@ using TaskManagement.Service.Transform;
 
 namespace TaskManagement.Service.Services.Implementations
 {
-    public class InMemoryUserRepository : IUserRepository
+    public class UserService : IUserService
     {
-        private readonly  Base _base = new();
+        private readonly InMemoryDataBase _base = new();
         private readonly UserTransform _userTransform = new();
 
-        //public InMemoryUserRepository(Base userBase)
-        //{
-        //    _base = userBase;
-
-        //}
+       
 
         public bool ValidateCreateUser(User user)
         {

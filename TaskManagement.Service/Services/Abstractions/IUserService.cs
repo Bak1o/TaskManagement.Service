@@ -7,7 +7,7 @@ using TaskManagement.Service.Models;
 
 namespace TaskManagement.Service.Services.Abstractions
 {
-    public interface IUserRepository
+    public interface IUserService
     {
         void CreateUser(User userToCreate);
         IEnumerable<User> GetAllUsers(); 
