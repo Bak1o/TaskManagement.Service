@@ -2,14 +2,21 @@
 using System.Text.RegularExpressions;
 using TaskManagement.Service.Exceptions;
 using TaskManagement.Service.Models;
+using TaskManagement.Service.Services.Abstractions;
 using TaskManagement.Service.Transform;
 
 namespace TaskManagement.Service.Services.Implementations
 {
-    public class InMemoryUserRepository
+    public class InMemoryUserRepository : IUserRepository
     {
-        private readonly  List<User> _users = new();
+        private readonly  Base _base = new();
         private readonly UserTransform _userTransform = new();
+
+        //public InMemoryUserRepository(Base userBase)
+        //{
+        //    _base = userBase;
+
+        //}
 
         public bool ValidateCreateUser(User user)
         {
@@ -17,15 +24,15 @@ namespace TaskManagement.Service.Services.Implementations
 
 
 
-            if (_users.Count > 0)
+            if (_base.Users.Count > 0)
 
             {
-                if (_users.Any(u => u.Email.Equals(user.Email)))
+                if (_base.Users.Any(u => u.Email.Equals(user.Email)))
                 {
                     throw new OwnValidationException("Email already exists.");
                 }
 
-                if (_users.Any(i => i.Id == user.Id))
+                if (_base.Users.Any(i => i.Id == user.Id))
                 {
                     throw new OwnValidationException(" Id already exists. ");
                 }
@@ -55,38 +62,35 @@ namespace TaskManagement.Service.Services.Implementations
 
             return true;
         }
-
-
-
         public void CreateUser(User userToCreate)
         {
             if (ValidateCreateUser(userToCreate))
             {
                 if (userToCreate.Id == 0)
                 {
-                    userToCreate.Id = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1;
+                    userToCreate.Id = _base.Users.Count > 0 ? _base.Users.Max(u => u.Id) + 1 : 1;
                 }
-                _users.Add(userToCreate);
+                _base.Users.Add(userToCreate);
             }
 
         }
         public IEnumerable<User> GetAllUsers()
         {
-            return _users;
+            return _base.Users;
         }
 
+       
         public User GetUser(int id)
         {
-            return _users.FirstOrDefault(user => user.Id == id);
+            return _base.Users.FirstOrDefault(user => user.Id == id);
         }
         public User GetUser(string userName)
         {
-            return _users.FirstOrDefault(user => user.UserName == userName);
+            return _base.Users.FirstOrDefault(user => user.UserName == userName);
         }
-
         public void UpdateUser(UpdateUser updateUser)
         {
-            var requestedUserExist = _users.Find(u => u.Id == updateUser.Id);
+            var requestedUserExist = _base.Users.Find(u => u.Id == updateUser.Id);
             if (requestedUserExist == null)
             {
                 throw new OwnValidationException($" user with id = {updateUser.Id} doesn't exists");
@@ -98,21 +102,21 @@ namespace TaskManagement.Service.Services.Implementations
             
 
         }
-
         public void DeleteUser(int id)
         {
-            var userToDelete = _users.Find(x => x.Id == id);
+            var userToDelete = _base.Users.Find(x => x.Id == id);
             if (userToDelete == null)
             {
                 throw new OwnValidationException($" user with Id = {id} doesn't exists");
             }
 
-            _users.Remove(userToDelete);
+            _base.Users.Remove(userToDelete);
         }
-
         public void SaveUser(User user)
         {
 
         }
+
+       
     }
 }
