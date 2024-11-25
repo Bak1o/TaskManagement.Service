@@ -10,8 +10,13 @@ namespace TaskManagement.Service.Services.Implementations
 {
     public class UserService : IUserService
     {
-        private readonly InMemoryDataBase _base = new();
+        private readonly InMemoryDataBase _base;
         private readonly UserTransform _userTransform = new();
+
+        public UserService(InMemoryDataBase inMemoryDataBase)
+        {
+            _base = inMemoryDataBase ?? throw new ArgumentNullException(nameof(inMemoryDataBase));
+        }
 
        
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using TaskManagement.Service.Exceptions;
+using TaskManagement.Service.Enums;
 
 namespace TaskManagement.Service.Models
 {

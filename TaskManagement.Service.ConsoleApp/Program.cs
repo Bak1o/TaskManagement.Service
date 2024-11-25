@@ -1,5 +1,7 @@
 ﻿
 
+using TaskManagement.Service.DataBase;
+using TaskManagement.Service.Enums;
 using TaskManagement.Service.Exceptions;
 using TaskManagement.Service.Models;
 using TaskManagement.Service.Services;
@@ -11,8 +13,10 @@ internal class Program
 {
     public static void Main(string[] args)
     {
-        var userRepository = new UserService();
+        var dataBase = new InMemoryDataBase();
+        var userRepository = new UserService(dataBase);
 
+        var projectRepository = new ProjectService(dataBase);
        
         try 
         { 
@@ -69,9 +73,37 @@ internal class Program
         userRepository.CreateUser(user4);
             Console.WriteLine(" user was added succesfully");
             userRepository.UpdateUser(updateUser4);
-        
 
-          
+            var project1 = new Project
+            {
+                Id = 1,
+                Name = "Marketing Project",
+                Description = "Managing Marketing strategies",
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddMonths(1),
+                Status = Status.ToDo,
+                CreatedByUserId = 1
+
+            };
+            projectRepository.CreateProject(project1);
+            Console.WriteLine(" project was added sucesfully");
+
+            var project2 = new Project
+            {
+                Id = 2,
+                Name = "Business Project",
+                Description = "Managing Business strategies",
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddMonths(2),
+                Status = Status.ToDo,
+                CreatedByUserId = 4
+            };
+            projectRepository.CreateProject(project2);
+            Console.WriteLine(" project was added succesfully ");
+
+
+
+
         }
         catch (OwnValidationException ex)
         {
@@ -83,6 +115,11 @@ internal class Program
         foreach (var user in userRepository.GetAllUsers())
         {
             Console.WriteLine($" user id is {user.Id}, name {user.UserName}");
+        }
+
+        foreach (var project in projectRepository.GetAllProjects())
+        {
+            Console.WriteLine($"project id is {project.Id}, name {project.Name}");
         }
 
     }

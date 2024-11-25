@@ -10,6 +10,7 @@ namespace TaskManagement.Service.DataBase
     public class InMemoryDataBase
     {
         public List<User> Users = new();
+        public List<Project> projects = new();
 
     }
 }
