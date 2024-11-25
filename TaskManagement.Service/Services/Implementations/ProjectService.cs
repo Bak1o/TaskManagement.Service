@@ -22,9 +22,9 @@ namespace TaskManagement.Service.Services.Implementations
 
         public bool ValidateCreateProject(Project project)
         {
-            if (_base.projects.Count > 0)
+            if (_base.Projects.Count > 0)
             {
-                if (_base.projects.Any(p => p.Id == project.Id))
+                if (_base.Projects.Any(p => p.Id == project.Id))
                     throw new OwnValidationException(" project Id already exists ");
             }
 
@@ -48,26 +48,26 @@ namespace TaskManagement.Service.Services.Implementations
             {
                 if (projectToCreate.Id == 0)
                 {
-                    projectToCreate.Id = _base.projects.Count > 0 ? _base.projects.Max(u => u.Id) + 1 : 1;
+                    projectToCreate.Id = _base.Projects.Count > 0 ? _base.Projects.Max(u => u.Id) + 1 : 1;
                 }
 
-                _base.projects.Add(projectToCreate);
+                _base.Projects.Add(projectToCreate);
             }
         }
 
         public IEnumerable<Project> GetAllProjects()
         {
-            return _base.projects;
+            return _base.Projects;
         }
 
         public Project GetProject(int id)
         {
-            return _base.projects.FirstOrDefault(p => p.Id == id);
+            return _base.Projects.FirstOrDefault(p => p.Id == id);
         }
 
         public void UpdateProject(UpdateProject updateProject)
         {
-            var requestedProjectExist = _base.projects.Find(u => u.Id == updateProject.Id);
+            var requestedProjectExist = _base.Projects.Find(u => u.Id == updateProject.Id);
             if (requestedProjectExist == null)
             {
                 throw new OwnValidationException($" Project with id = {updateProject.Id} doesn't exists");
