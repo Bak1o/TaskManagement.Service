@@ -101,6 +101,19 @@ internal class Program
             projectRepository.CreateProject(project2);
             Console.WriteLine(" project was added succesfully ");
 
+            var updateProject2 = new UpdateProject
+            {
+                Id = 2,
+                Name = "Update Business Project",
+                Description = "Managing Business strategies",
+
+                EndDate = DateTime.Today.AddMonths(2),
+                Status = Status.InProgress,
+
+
+            };
+            projectRepository.UpdateProject(updateProject2);
+
 
 
 
