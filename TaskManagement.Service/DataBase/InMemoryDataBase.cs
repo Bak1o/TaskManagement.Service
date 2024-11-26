@@ -11,6 +11,7 @@ namespace TaskManagement.Service.DataBase
     {
         public List<User> Users = new();
         public List<Project> Projects = new();
+        public List<DomainTask> Tasks = new();
 
     }
 }

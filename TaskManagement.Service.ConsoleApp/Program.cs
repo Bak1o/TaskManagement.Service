@@ -57,21 +57,47 @@ internal class Program
         {
             Email = "dsssgF4@gmail.com",
             Password = "password",
-            Role = Role.TeamMember,
+            Role = Role.Admin,
             UserName = "Natia"
 
         };
-        var updateUser4 = new UpdateUser
+        userRepository.CreateUser(user4);
+        Console.WriteLine(" user was added succesfully");
+
+        var user5 = new User
+        {
+            Email = "dsNyssgF4@gmail.com",
+            Password = "password",
+            Role = Role.TeamMember,
+            UserName = "Gela"
+
+        };
+        userRepository.CreateUser(user5);
+        Console.WriteLine(" user was added succesfully");
+
+        var user6 = new User
+        {
+            Email = "dssSwesgF4@gmail.com",
+            Password = "password",
+            Role = Role.Admin,
+            UserName = "Ana"
+
+        };
+        userRepository.CreateUser(user4);
+        Console.WriteLine(" user was added succesfully");
+
+
+
+            var updateUser4 = new UpdateUser
         {
             Id = 4,
             Email = "dsssgF4@gmail.com",
             Password = "passwordupdate",
-            Role = Role.TeamMember,
+            Role = Role.Admin,
             UserName = "NatiaUpdate"
 
         };
-        userRepository.CreateUser(user4);
-            Console.WriteLine(" user was added succesfully");
+      
             userRepository.UpdateUser(updateUser4);
 
             var project1 = new Project
@@ -99,6 +125,19 @@ internal class Program
                 CreatedByUserId = 4
             };
             projectRepository.CreateProject(project2);
+            Console.WriteLine(" project was added succesfully ");
+
+            var project3 = new Project
+            {
+                Id = 3,
+                Name = "Communications Project",
+                Description = "Managing Communications strategies",
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddMonths(3),
+                Status = Status.ToDo,
+                CreatedByUserId = 6
+            };
+            projectRepository.CreateProject(project3);
             Console.WriteLine(" project was added succesfully ");
 
             var updateProject2 = new UpdateProject

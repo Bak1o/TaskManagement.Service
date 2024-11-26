@@ -10,14 +10,15 @@ namespace TaskManagement.Service.Models
     public class DomainTask
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public required string Title { get; set; }
         public string Description { get; set; }
-        public int ProjectId { get; set; }
-        public  List<User> AssignedUsers { get; set; } 
-        public Status Status { get; set; }
-        public Priority Priority { get; set; }
+        public required int ProjectId { get; set; }
+        public  List<User> AssignedUsers { get; set; }
+        public Status Status { get; set; } = Status.ToDo;
+        public required Priority Priority { get; set; }
+        public DateTime StartDate { get; set; }
         public DateTime DeadLine { get; set; }
-        public int CreatedByUserId { get; set; }
+        public required int CreatedByUserId { get; set; }
 
 
         
