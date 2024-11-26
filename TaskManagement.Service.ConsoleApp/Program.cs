@@ -17,6 +17,7 @@ internal class Program
         var userRepository = new UserService(dataBase);
 
         var projectRepository = new ProjectService(dataBase);
+        var taskRepository = new DomainTaskService(dataBase);
        
         try 
         { 
@@ -152,6 +153,65 @@ internal class Program
 
             };
             projectRepository.UpdateProject(updateProject2);
+
+            var task1 = new DomainTask
+            {
+                CreatedByUserId = 1,
+                Id = 1,
+                AssignedUsers = new List<User>
+                {
+                    new User()
+                    {
+                        Email = "dgFgg4@gmail.com",
+                        Password = "password",
+                        Role = Role.TeamMember,
+                        UserName = "Niko"
+                    },
+                    new User()
+                    {
+
+                        Email = "dhFyuyg4@gmail.com",
+                        Password = "password",
+                        Role = Role.TeamMember,
+                        UserName = "Nino"
+
+                    }
+                },
+                DeadLine = DateTime.Today.AddMonths(2),
+                Description = "TestDescription1",
+                Priority = Priority.High,
+                ProjectId = 1,
+                Status = Status.ToDo,
+                Title = " testTitle1",
+                StartDate = DateTime.Today
+
+            };
+            var task2 = new DomainTask
+            {
+                CreatedByUserId = 4,
+                Id = 2,
+                AssignedUsers = new List<User>
+                {
+                    new User()
+                    {
+                        Id = 5,
+                        Email = "dsNyssgF4@gmail.com",
+                        Password = "password",
+                        Role = Role.TeamMember,
+                        UserName = "Gela"
+                    }
+                    
+                   
+                },
+                DeadLine = DateTime.Today.AddMonths(3),
+                Description = "TestDescription2",
+                Priority = Priority.Medium,
+                ProjectId = 2,
+                Status = Status.ToDo,
+                Title = " testTitle2",
+                StartDate = DateTime.Today
+
+            };
 
 
 
