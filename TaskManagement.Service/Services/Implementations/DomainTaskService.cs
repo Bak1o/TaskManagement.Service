@@ -85,6 +85,17 @@ namespace TaskManagement.Service.Services.Implementations
             }
         }
 
+        public void DeleteDomainTask(int id)
+        {
+            var taskToDelete = _base.Tasks.Find(x => x.Id == id);
+            if (taskToDelete == null)
+            {
+                throw new OwnValidationException($" task with Id = {id} doesn't exists");
+            }
+
+            _base.Tasks.Remove(taskToDelete);
+        }
+
 
     }
 }
