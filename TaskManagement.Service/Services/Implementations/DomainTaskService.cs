@@ -14,6 +14,7 @@ namespace TaskManagement.Service.Services.Implementations
     public class DomainTaskService
     {
         private readonly InMemoryDataBase _base;
+        private readonly DomainTaskTransform _taskTransform = new();
         
 
         public DomainTaskService(InMemoryDataBase inMemoryDataBase)
@@ -41,7 +42,7 @@ namespace TaskManagement.Service.Services.Implementations
             if (_base.Projects.TrueForAll(p => p.Id != task.ProjectId))
                 throw new OwnValidationException($" project with id : {task.ProjectId} was not found ");
 
-            if (task.AssignedUsers.Any(assignedUser => !_base.Users.TrueForAll(user => user.Id == assignedUser.Id)))
+            if (task.AssignedUsers.TrueForAll(assignedUser => _base.Users.TrueForAll(user => user.Id != assignedUser.Id)))
                 throw new OwnValidationException(" assigned user was not found in users ");
 
             if (task.DeadLine < task.StartDate)
@@ -63,6 +64,25 @@ namespace TaskManagement.Service.Services.Implementations
                 _base.Tasks.Add(taskToCreate);
             }
 
+        }
+
+        public IEnumerable<DomainTask> GetAllTasks()
+        {
+            return _base.Tasks;
+        }
+
+        public void UpdateDomainTask(UpdateDomainTask updateTask)
+        {
+            var requestedTaskExist = _base.Tasks.Find(u => u.Id == updateTask.Id);
+            if (requestedTaskExist == null)
+            {
+                throw new OwnValidationException($" task with id = {updateTask.Id} doesn't exists");
+            }
+
+            if (updateTask.Validate())
+            {
+                _taskTransform.TransformFromModelToRepositoryModel(updateTask, requestedTaskExist);
+            }
         }
 
 

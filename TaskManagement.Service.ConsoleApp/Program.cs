@@ -68,7 +68,7 @@ internal class Program
 
         var user5 = new User
         {
-            Email = "dsNyssgF4@gmail.com",
+            Email = "dsNyuussgF4@gmail.com",
             Password = "password",
             Role = Role.TeamMember,
             UserName = "Gela"
@@ -79,13 +79,13 @@ internal class Program
 
         var user6 = new User
         {
-            Email = "dssSwesgF4@gmail.com",
+            Email = "dssSweyttsgF4@gmail.com",
             Password = "password",
             Role = Role.Admin,
             UserName = "Ana"
 
         };
-        userRepository.CreateUser(user4);
+        userRepository.CreateUser(user6);
         Console.WriteLine(" user was added succesfully");
 
 
@@ -163,6 +163,7 @@ internal class Program
                 {
                     new User()
                     {
+                        Id = 2,
                         Email = "dgFgg4@gmail.com",
                         Password = "password",
                         Role = Role.TeamMember,
@@ -170,7 +171,7 @@ internal class Program
                     },
                     new User()
                     {
-
+                        Id = 3,
                         Email = "dhFyuyg4@gmail.com",
                         Password = "password",
                         Role = Role.TeamMember,
@@ -219,6 +220,31 @@ internal class Program
             taskRepository.CreateDomainTask(task2);
             Console.WriteLine(" task was created successfully ");
 
+            var updateTask2 = new UpdateDomainTask
+            {
+                Id = 2,
+                AssignedUsers = new List<User>
+                {
+                    new User()
+                    {
+                        Id = 5,
+                        Email = "dsNyssgF4@gmail.com",
+                        Password = "password",
+                        Role = Role.TeamMember,
+                        UserName = "Gela"
+                    }
+
+
+                },
+                DeadLine = DateTime.Today.AddMonths(3),
+                Description = "UpdateTestDescription2",
+                Priority = Priority.Medium,
+
+                Status = Status.InProgress,
+                Title = "UpdatetestTitle2",
+            };
+            taskRepository.UpdateDomainTask(updateTask2);
+
 
 
 
@@ -239,6 +265,12 @@ internal class Program
         foreach (var project in projectRepository.GetAllProjects())
         {
             Console.WriteLine($"project id is {project.Id}, name {project.Name}");
+        }
+
+        foreach (var domainTasks in taskRepository.GetAllTasks())
+        {
+            Console.WriteLine($" task id is {domainTasks.Id}, title {domainTasks.Title}");
+            
         }
 
     }
