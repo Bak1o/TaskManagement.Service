@@ -1,5 +1,6 @@
 ﻿
 
+using System.Collections.Concurrent;
 using TaskManagement.Service.DataBase;
 using TaskManagement.Service.Enums;
 using TaskManagement.Service.Exceptions;
@@ -186,6 +187,9 @@ internal class Program
                 StartDate = DateTime.Today
 
             };
+            taskRepository.CreateDomainTask(task1);
+            Console.WriteLine(" task was created successfully ");
+           
             var task2 = new DomainTask
             {
                 CreatedByUserId = 4,
@@ -212,6 +216,9 @@ internal class Program
                 StartDate = DateTime.Today
 
             };
+            taskRepository.CreateDomainTask(task2);
+            Console.WriteLine(" task was created successfully ");
+
 
 
 
