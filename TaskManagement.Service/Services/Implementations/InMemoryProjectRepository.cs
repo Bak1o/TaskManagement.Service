@@ -10,21 +10,23 @@ using TaskManagement.Service.Transform;
 
 namespace TaskManagement.Service.Services.Implementations
 {
-    public class ProjectService
+    public class InMemoryProjectRepository
     {
-        private readonly InMemoryDataBase _base;
+        private readonly InMemoryDataBase _inMemoryDb;
         private readonly ProjectTransform _projectTransform = new();
 
-        public ProjectService(InMemoryDataBase inMemoryDataBase)
+        public InMemoryProjectRepository(InMemoryDataBase inMemoryDb)
         {
-            _base = inMemoryDataBase ?? throw new ArgumentNullException(nameof(inMemoryDataBase));
+            _inMemoryDb = inMemoryDb;
         }
+
+        
 
         public bool ValidateCreateProject(Project project)
         {
-            if (_base.Projects.Count > 0)
+            if (_inMemoryDb.Projects.Count > 0)
             {
-                if (_base.Projects.Any(p => p.Id == project.Id))
+                if (_inMemoryDb.Projects.Any(p => p.Id == project.Id))
                     throw new OwnValidationException(" project Id already exists ");
             }
 
@@ -33,8 +35,8 @@ namespace TaskManagement.Service.Services.Implementations
 
             if(project.Description.Length is < 1 or > 4000)
                 throw new OwnValidationException(" project description must contain minimum 1 symbol and maximum 4000 symbol ");
-           
-            if (_base.Users.TrueForAll(u => u.Id != project.CreatedByUserId))
+
+            if (_inMemoryDb.Users.TrueForAll(u => u.Id != project.CreatedByUserId))
                 throw new OwnValidationException($" user with this Id {project.CreatedByUserId} is not present in user base ");
 
 
@@ -48,26 +50,26 @@ namespace TaskManagement.Service.Services.Implementations
             {
                 if (projectToCreate.Id == 0)
                 {
-                    projectToCreate.Id = _base.Projects.Count > 0 ? _base.Projects.Max(u => u.Id) + 1 : 1;
+                    projectToCreate.Id = _inMemoryDb.Projects.Count > 0 ? _inMemoryDb.Projects.Max(u => u.Id) + 1 : 1;
                 }
 
-                _base.Projects.Add(projectToCreate);
+                _inMemoryDb.Projects.Add(projectToCreate);
             }
         }
 
         public IEnumerable<Project> GetAllProjects()
         {
-            return _base.Projects;
+            return _inMemoryDb.Projects;
         }
 
         public Project GetProject(int id)
         {
-            return _base.Projects.FirstOrDefault(p => p.Id == id);
+            return _inMemoryDb.Projects.FirstOrDefault(p => p.Id == id)!;
         }
 
         public void UpdateProject(UpdateProject updateProject)
         {
-            var requestedProjectExist = _base.Projects.Find(u => u.Id == updateProject.Id);
+            var requestedProjectExist = _inMemoryDb.Projects.Find(u => u.Id == updateProject.Id);
             if (requestedProjectExist == null)
             {
                 throw new OwnValidationException($" Project with id = {updateProject.Id} doesn't exists");

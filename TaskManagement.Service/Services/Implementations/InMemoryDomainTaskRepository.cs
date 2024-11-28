@@ -11,22 +11,23 @@ using TaskManagement.Service.Transform;
 
 namespace TaskManagement.Service.Services.Implementations
 {
-    public class DomainTaskService
+    public class InMemoryDomainTaskRepository
     {
-        private readonly InMemoryDataBase _base;
+        private readonly InMemoryDataBase _inMemoryDb;
         private readonly DomainTaskTransform _taskTransform = new();
         
+        
 
-        public DomainTaskService(InMemoryDataBase inMemoryDataBase)
+        public InMemoryDomainTaskRepository(InMemoryDataBase inMemoryDataBase)
         {
-            _base = inMemoryDataBase ?? throw new ArgumentNullException(nameof(inMemoryDataBase));
+            _inMemoryDb = inMemoryDataBase ?? throw new ArgumentNullException(nameof(inMemoryDataBase));
         }
 
         public bool ValidateCreateDomainTask(DomainTask task)
         {
-            if (_base.Tasks.Count > 0)
+            if (_inMemoryDb.Tasks.Count > 0)
             {
-                if (_base.Tasks.Any(p => p.Id == task.Id))
+                if (_inMemoryDb.Tasks.Any(p => p.Id == task.Id))
                     throw new OwnValidationException(" task Id already exists ");
             }
 
@@ -36,13 +37,13 @@ namespace TaskManagement.Service.Services.Implementations
             if (task.Description.Length is < 1 or > 4000)
                 throw new OwnValidationException(" task description must contain minimum 1 symbol and maximum 4000 symbol ");
 
-            if (_base.Users.TrueForAll(u => u.Id != task.CreatedByUserId))
+            if (_inMemoryDb.Users.TrueForAll(u => u.Id != task.CreatedByUserId))
                 throw new OwnValidationException($" user with this Id {task.CreatedByUserId} is not present in user base ");
            
-            if (_base.Projects.TrueForAll(p => p.Id != task.ProjectId))
+            if (_inMemoryDb.Projects.TrueForAll(p => p.Id != task.ProjectId))
                 throw new OwnValidationException($" project with id : {task.ProjectId} was not found ");
 
-            if (task.AssignedUsers.TrueForAll(assignedUser => _base.Users.TrueForAll(user => user.Id != assignedUser.Id)))
+            if (task.AssignedUsers.TrueForAll(assignedUser => _inMemoryDb.Users.TrueForAll(user => user.Id != assignedUser.Id)))
                 throw new OwnValidationException(" assigned user was not found in users ");
 
             if (task.DeadLine < task.StartDate)
@@ -59,21 +60,21 @@ namespace TaskManagement.Service.Services.Implementations
             {
                 if (taskToCreate.Id == 0)
                 {
-                    taskToCreate.Id = _base.Tasks.Count > 0 ? _base.Tasks.Max(u => u.Id) + 1 : 1;
+                    taskToCreate.Id = _inMemoryDb.Tasks.Count > 0 ? _inMemoryDb.Tasks.Max(u => u.Id) + 1 : 1;
                 }
-                _base.Tasks.Add(taskToCreate);
+                _inMemoryDb.Tasks.Add(taskToCreate);
             }
 
         }
 
         public IEnumerable<DomainTask> GetAllTasks()
         {
-            return _base.Tasks;
+            return _inMemoryDb.Tasks;
         }
 
         public void UpdateDomainTask(UpdateDomainTask updateTask)
         {
-            var requestedTaskExist = _base.Tasks.Find(u => u.Id == updateTask.Id);
+            var requestedTaskExist = _inMemoryDb.Tasks.Find(u => u.Id == updateTask.Id);
             if (requestedTaskExist == null)
             {
                 throw new OwnValidationException($" task with id = {updateTask.Id} doesn't exists");
@@ -87,13 +88,13 @@ namespace TaskManagement.Service.Services.Implementations
 
         public void DeleteDomainTask(int id)
         {
-            var taskToDelete = _base.Tasks.Find(x => x.Id == id);
+            var taskToDelete = _inMemoryDb.Tasks.Find(x => x.Id == id);
             if (taskToDelete == null)
             {
                 throw new OwnValidationException($" task with Id = {id} doesn't exists");
             }
 
-            _base.Tasks.Remove(taskToDelete);
+            _inMemoryDb.Tasks.Remove(taskToDelete);
         }
 
 

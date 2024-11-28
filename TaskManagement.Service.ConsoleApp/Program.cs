@@ -15,10 +15,10 @@ internal class Program
     public static void Main(string[] args)
     {
         var dataBase = new InMemoryDataBase();
-        var userRepository = new UserService(dataBase);
+        var userRepository = new InMemoryUserRepository(dataBase);
 
-        var projectRepository = new ProjectService(dataBase);
-        var taskRepository = new DomainTaskService(dataBase);
+        var projectRepository = new InMemoryProjectRepository(dataBase);
+        var taskRepository = new InMemoryDomainTaskRepository(dataBase);
        
         try 
         { 
