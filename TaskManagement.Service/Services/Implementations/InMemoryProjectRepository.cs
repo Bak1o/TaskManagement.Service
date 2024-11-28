@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using TaskManagement.Service.DataBase;
 using TaskManagement.Service.Exceptions;
 using TaskManagement.Service.Models;
+using TaskManagement.Service.Services.Abstractions;
 using TaskManagement.Service.Transform;
 
 namespace TaskManagement.Service.Services.Implementations
 {
-    public class InMemoryProjectRepository
+    public class InMemoryProjectRepository : IInMemoryProjectRepository
     {
         private readonly InMemoryDataBase _inMemoryDb;
         private readonly ProjectTransform _projectTransform = new();

@@ -8,7 +8,7 @@ using TaskManagement.Service.Transform;
 
 namespace TaskManagement.Service.Services.Implementations
 {
-    public class InMemoryUserRepository : IUserService
+    public class InMemoryUserRepository : IInMemoryUserRepository
     {
         private readonly InMemoryDataBase _inMemoryDb;
         private readonly UserTransform _userTransform = new();

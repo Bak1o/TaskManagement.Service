@@ -4,14 +4,16 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+
 using TaskManagement.Service.DataBase;
 using TaskManagement.Service.Exceptions;
 using TaskManagement.Service.Models;
+using TaskManagement.Service.Services.Abstractions;
 using TaskManagement.Service.Transform;
 
 namespace TaskManagement.Service.Services.Implementations
 {
-    public class InMemoryDomainTaskRepository
+    public class InMemoryDomainTaskRepository : IInMemoryDomainTaskRepository
     {
         private readonly InMemoryDataBase _inMemoryDb;
         private readonly DomainTaskTransform _taskTransform = new();
@@ -70,6 +72,11 @@ namespace TaskManagement.Service.Services.Implementations
         public IEnumerable<DomainTask> GetAllTasks()
         {
             return _inMemoryDb.Tasks;
+        }
+
+        public DomainTask GetDomainTask(int id)
+        {
+            return _inMemoryDb.Tasks.FirstOrDefault(t => t.Id == id)!;
         }
 
         public void UpdateDomainTask(UpdateDomainTask updateTask)
