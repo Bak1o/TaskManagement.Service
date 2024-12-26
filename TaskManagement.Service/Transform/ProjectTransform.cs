@@ -7,9 +7,9 @@ using TaskManagement.Service.Models;
 
 namespace TaskManagement.Service.Transform
 {
-    public class ProjectTransform
+    public static class ProjectTransform
     {
-        public void TransformFromModelToRepositoryModel(UpdateProject source, Project target)
+        public static void TransformFromModelToRepositoryModel(UpdateProject source, Project target)
         {
             target.Name = source.Name;
             target.Description = source.Description;

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Service", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Service.ConsoleApp", "TaskManagement.Service.ConsoleApp\TaskManagement.Service.ConsoleApp.csproj", "{761DC13F-EE9E-43CA-A9C7-6F8E5653B50C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Service.Api", "TaskManagement.Service.Api\TaskManagement.Service.Api.csproj", "{947F5980-687A-4CA2-8C0D-807AEEFC5D8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{761DC13F-EE9E-43CA-A9C7-6F8E5653B50C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{761DC13F-EE9E-43CA-A9C7-6F8E5653B50C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{761DC13F-EE9E-43CA-A9C7-6F8E5653B50C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{947F5980-687A-4CA2-8C0D-807AEEFC5D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{947F5980-687A-4CA2-8C0D-807AEEFC5D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{947F5980-687A-4CA2-8C0D-807AEEFC5D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{947F5980-687A-4CA2-8C0D-807AEEFC5D8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

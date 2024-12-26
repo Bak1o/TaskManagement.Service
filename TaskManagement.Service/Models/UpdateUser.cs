@@ -18,7 +18,7 @@ namespace TaskManagement.Service.Models
         public required string Password { get; set; }
         public Role Role { get; set; }
 
-        public bool Validate()
+        public void Validate()
         {
             if (UserName.Length < 1 || UserName.Length > 100)
                 throw new OwnValidationException(" User name must contain minimum on1 symbol and maximum 100 symbol ");
@@ -38,7 +38,7 @@ namespace TaskManagement.Service.Models
                 throw new OwnValidationException(" password must contain minimum 8 symbols and maximum 16 symbols ");
 
 
-            return true;
+            
 
 
         }

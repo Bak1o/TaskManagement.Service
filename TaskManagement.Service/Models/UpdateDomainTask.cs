@@ -19,7 +19,7 @@ namespace TaskManagement.Service.Models
         public Priority Priority { get; set; }
         public DateTime DeadLine { get; set; }
 
-        public bool Validate()
+        public void Validate()
         {
             if (Title!.Length is < 1 or > 100)
                 throw new OwnValidationException(" project name must contain minimum 1 symbol and maximum 100 symbol ");
@@ -32,7 +32,7 @@ namespace TaskManagement.Service.Models
                 DeadLine = DateTime.Today;
             }
 
-            return true;
+            
         }
 
     }

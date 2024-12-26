@@ -14,7 +14,7 @@ namespace TaskManagement.Service.Services.Implementations
     public class InMemoryProjectRepository : IInMemoryProjectRepository
     {
         private readonly InMemoryDataBase _inMemoryDb;
-        private readonly ProjectTransform _projectTransform = new();
+        
 
         public InMemoryProjectRepository(InMemoryDataBase inMemoryDb)
         {
@@ -76,9 +76,9 @@ namespace TaskManagement.Service.Services.Implementations
                 throw new OwnValidationException($" Project with id = {updateProject.Id} doesn't exists");
             }
 
-            if (updateProject.Validate())
+            updateProject.Validate();
 
-                _projectTransform.TransformFromModelToRepositoryModel(updateProject, requestedProjectExist);
+                ProjectTransform.TransformFromModelToRepositoryModel(updateProject,requestedProjectExist);
 
         }
 

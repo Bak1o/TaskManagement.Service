@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using TaskManagement.Service.DataBase;
+using TaskManagement.Service.Enums;
 using TaskManagement.Service.Exceptions;
 using TaskManagement.Service.Models;
 using TaskManagement.Service.Services.Abstractions;
@@ -11,14 +12,79 @@ namespace TaskManagement.Service.Services.Implementations
     public class InMemoryUserRepository : IInMemoryUserRepository
     {
         private readonly InMemoryDataBase _inMemoryDb;
-        private readonly UserTransform _userTransform = new();
+        
 
         public InMemoryUserRepository(InMemoryDataBase inMemoryDb)
         {
             _inMemoryDb = inMemoryDb ?? throw new ArgumentNullException(nameof(inMemoryDb));
+            var user1 = new User
+            {
+                Email = "dgF4@gmail.com",
+                Password = "password",
+                Role = Role.Admin,
+                UserName = "Bako"
+
+            };
+            CreateUser(user1);
+            
+            var user2 = new User
+            {
+                Email = "dgFgg4@gmail.com",
+                Password = "password",
+                Role = Role.TeamMember,
+                UserName = "Niko"
+
+            };
+            CreateUser(user2);
+            
+
+            var user3 = new User
+            {
+                Email = "dhFyuyg4@gmail.com",
+                Password = "password",
+                Role = Role.TeamMember,
+                UserName = "Nino"
+
+            };
+            CreateUser(user3);
+            
+
+            var user4 = new User
+            {
+                Email = "dsssgF4@gmail.com",
+                Password = "password",
+                Role = Role.Admin,
+                UserName = "Natia"
+
+            };
+            CreateUser(user4);
+            
+
+            var user5 = new User
+            {
+                Email = "dsNyuussgF4@gmail.com",
+                Password = "password",
+                Role = Role.TeamMember,
+                UserName = "Gela"
+
+            };
+            CreateUser(user5);
+            
+
+            var user6 = new User
+            {
+                Email = "dssSweyttsgF4@gmail.com",
+                Password = "password",
+                Role = Role.Admin,
+                UserName = "Ana"
+
+            };
+            CreateUser(user6);
+            
+
         }
 
-       
+
 
         public bool ValidateCreateUser(User user)
         {
@@ -72,7 +138,7 @@ namespace TaskManagement.Service.Services.Implementations
                 {
                     userToCreate.Id = _inMemoryDb.Users.Count > 0 ? _inMemoryDb.Users.Max(u => u.Id) + 1 : 1;
                 }
-                _inMemoryDb.Users.Add(userToCreate);
+                 _inMemoryDb.Users.Add(userToCreate);
             }
 
         }
@@ -99,8 +165,8 @@ namespace TaskManagement.Service.Services.Implementations
                 throw new OwnValidationException($" user with id = {updateUser.Id} doesn't exists");
             }
 
-            if (updateUser.Validate())
-                _userTransform.TransformFromModelToRepositoryModel(updateUser,requestedUserExist);
+            updateUser.Validate();
+                UserTransform.TransformFromModelToRepositoryModel(updateUser,requestedUserExist);
             
 
         }

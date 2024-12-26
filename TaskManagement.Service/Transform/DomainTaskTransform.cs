@@ -9,24 +9,24 @@ using TaskManagement.Service.Models;
 
 namespace TaskManagement.Service.Transform
 {
-    public class DomainTaskTransform
+    public static class DomainTaskTransform
     {
-        public void TransformFromModelToRepositoryModel(UpdateDomainTask target, DomainTask source)
+        public static void TransformFromModelToRepositoryModel(UpdateDomainTask source, DomainTask target)
         {
-            source.Title = target.Title;
-            source.Description = target.Description;
-            source.DeadLine = target.DeadLine;
-            source.Id = target.Id;
+            target.Title = source.Title;
+            target.Description = source.Description;
+            target.DeadLine = source.DeadLine;
+            target.Id = source.Id;
            
-            if (source.Status == Status.InProgress && target.Status == Status.ToDo)
+            if (target.Status == Status.InProgress && source.Status == Status.ToDo)
                 throw new OwnValidationException(" if task status is in progress you can't change into to do");
             
-            if(source.Status == Status.Done && (target.Status == Status.ToDo || target.Status == Status.InProgress))
+            if(target.Status == Status.Done && (source.Status == Status.ToDo || source.Status == Status.InProgress))
                  throw new OwnValidationException(" if task status is done you can't change status ");
 
             
-            source.Status = target.Status;
-            source.Priority = target.Priority;
+            target.Status = source.Status;
+            target.Priority = source.Priority;
 
         }
     }

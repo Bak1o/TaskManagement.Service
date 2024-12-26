@@ -7,9 +7,9 @@ using TaskManagement.Service.Models;
 
 namespace TaskManagement.Service.Transform
 {
-    public class UserTransform
+    public static class UserTransform
     {
-        public void TransformFromModelToRepositoryModel(UpdateUser source, User target)
+        public static void TransformFromModelToRepositoryModel(UpdateUser source, User target)
         {
             target.UserName = source.UserName;
             target.Email = source.Email;

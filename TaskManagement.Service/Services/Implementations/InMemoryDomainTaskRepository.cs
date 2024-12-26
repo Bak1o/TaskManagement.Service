@@ -16,7 +16,7 @@ namespace TaskManagement.Service.Services.Implementations
     public class InMemoryDomainTaskRepository : IInMemoryDomainTaskRepository
     {
         private readonly InMemoryDataBase _inMemoryDb;
-        private readonly DomainTaskTransform _taskTransform = new();
+        
         
         
 
@@ -87,10 +87,10 @@ namespace TaskManagement.Service.Services.Implementations
                 throw new OwnValidationException($" task with id = {updateTask.Id} doesn't exists");
             }
 
-            if (updateTask.Validate())
-            {
-                _taskTransform.TransformFromModelToRepositoryModel(updateTask, requestedTaskExist);
-            }
+            updateTask.Validate();
+            
+                DomainTaskTransform.TransformFromModelToRepositoryModel(updateTask,requestedTaskExist);
+            
         }
 
         public void DeleteDomainTask(int id)
